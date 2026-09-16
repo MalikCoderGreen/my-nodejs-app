@@ -1,20 +1,25 @@
 version: 0.2
 
-phases: 
-    install:
-        runtime-versions:
-            nodejs: latest
-        commands:
-            - echo "installing something"
-    pre_build:
-        commands: 
-            - echo "we are in the pre build phase"
-    build:
-        commands:
-            - echo "we are in the build block"
-            - echo "we will run some tests"
-            - grep -Fq "Congratulations" index.html
-    post_build:
-        commands:
-            - echo "we are in the post build phase"
-            
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - echo "Installing dependencies"
+      - npm install
+  pre_build:
+    commands:
+      - echo "Linting app.js for obvious syntax errors"
+      - node --check app.js
+  build:
+    commands:
+      - echo "Smoke-testing index.html"
+      - grep -Fq "Congratulations" index.html
+  post_build:
+    commands:
+      - echo "Build finished"
+
+artifacts:
+  files:
+    - '**/*'
+
