@@ -15,11 +15,18 @@ phases:
     commands:
       - echo "Smoke-testing index.html"
       - grep -Fq "Congratulations" index.html
+      - echo "Running test suite"
+      - npm test
   post_build:
     commands:
       - echo "Build finished"
+reports:
+  MyReportGroup: # The name or ARN of the Report Group
+    files:
+      - "results.xml"
+    base-directory: "test-results" # Directory containing the test file(s)
+    file-format: "JUNITXML" # Options: JUNITXML, CUCUMBERJSON, NUNITXML, TESTNGXML
 
 artifacts:
   files:
-    - '**/*'
-
+    - "**/*"
